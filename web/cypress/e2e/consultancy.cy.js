@@ -18,5 +18,19 @@ describe('Formulário de Consultoria', () => {
             .find('select')
             .select('inCompany')
 
+        cy.contains('label', 'Pessoa Física')
+            .find('input')
+            .check()
+            .should('be.checked')
+
+        cy.contains('label', 'Pessoa Jurídica')
+            .find('input')
+            .should('be.not.checked')
+
+        // cy.contains('label', 'Pessoa Jurídica')
+        //     .parent()
+        //     .find('input')
+        //     .click()
+
     })
 })
