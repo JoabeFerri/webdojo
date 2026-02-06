@@ -11,7 +11,7 @@ describe("Formulário de Consultoria", () => {
       .type("11999999999")
       .should("have.value", "(11) 99999-9999");
 
-    // cy.get('#consultancyType').select('inCompany')
+    // cy.get('#consultancyType').select('inCompany') maneira menos eficaz
     cy.contains("label", "Tipo de Consultoria")
       .parent()
       .find("select")
@@ -29,7 +29,7 @@ describe("Formulário de Consultoria", () => {
     // cy.contains('label', 'Pessoa Jurídica')
     //     .parent()
     //     .find('input')
-    //     .click()
+    //     .click() maneira menos eficaz
 
     cy.contains("label", "CPF")
       .parent()
@@ -83,8 +83,14 @@ describe("Formulário de Consultoria", () => {
     cy.contains('button', 'Enviar formulário')
       .click()
 
-    cy.contains('Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
-    .should('be.visible')
+    // cy.contains('Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
+    // .should('be.visible')
+
+    cy.get('.modal', {timeout: 7000})
+      .should('be.visible')
+      .find('.modal-content')
+      .should('be.visible')
+      .and('have.text', 'Sua solicitação de consultoria foi enviada com sucesso! Em breve, nossa equipe entrará em contato através do email fornecido.')
 
   });
 
@@ -96,5 +102,35 @@ describe("Formulário de Consultoria", () => {
 
     cy.contains('button', 'Enviar formulário')
       .click()
+
+    cy.contains('label', 'Nome Completo')
+      .parent()
+      .find('p')
+      .should('be.visible')
+      .should('have.text', 'Campo obrigatório')
+      .and('have.class', 'text-red-400')
+      .and('have.css', 'color', 'rgb(248, 113, 113)')
+
+      cy.contains('label', 'Email')
+      .parent()
+      .find('p')
+      .should('be.visible')
+      .should('have.text', 'Campo obrigatório')
+      .and('have.class', 'text-red-400')
+      .and('have.css', 'color', 'rgb(248, 113, 113)')
+
+      cy.contains('label', 'termos de uso *')
+      .parent()
+      .find('p')
+      .should('be.visible')
+      .should('have.text', 'Você precisa aceitar os termos de uso')
+      .and('have.class', 'text-red-400')
+      .and('have.css', 'color', 'rgb(248, 113, 113)')
+
+    // cy.contains('p', 'Você precisa aceitar os termos de uso')
+    //   .should('be.visible')
+    //   .and('have.class', 'text-red-400')
+    //   .and('have.css', 'color', 'rgb(248, 113, 113)')
+
   })
 });
